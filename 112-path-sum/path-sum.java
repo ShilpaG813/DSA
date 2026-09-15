@@ -16,24 +16,10 @@
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if(root==null) return false;
-        Stack<TreeNode> path=new Stack<>();
-        Stack<Integer> pathsum=new Stack<>();
-        path.push(root);
-        pathsum.push(root.val);
-        while(!path.isEmpty()){
-            TreeNode temp=path.pop();
-            int tempval=pathsum.pop();
-            if(temp.left==null && temp.right==null && tempval==targetSum){
-                return true;
-            }
-            if(temp.right!=null){
-                path.push(temp.right);
-                pathsum.push(temp.right.val+tempval);
-            }
-            if(temp.left!=null){
-                path.push(temp.left);
-                pathsum.push(temp.left.val+tempval);
-            }
-        }return false;
+        if(root.left==null && root.right==null) {
+            return targetSum==root.val;
+        }
+        targetSum=targetSum-root.val;
+        return(hasPathSum(root.left,targetSum)|| hasPathSum(root.right,targetSum));
     }
 }
